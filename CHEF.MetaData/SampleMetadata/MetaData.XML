@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CHEFMetaData ApplicationName="Test">
+    <Process DefaultAllowTruncate="True|False" VerboseLogging="True|False" BadRowsFolderLocation="">
+      <ConnectionSet>
+        <SQLConnection key="" ServerName="" DatabaseName=""/>
+        <FileConnection key="" FileName=""/>
+        <FlatFileConnection key="" FileName=""/>
+        <SMTPConnection key="" SmtpServer="SMTPServerName" UseWindowsAuthentication="True" EnableSsl="False"/>
+      </ConnectionSet>
+      
+      <!--SendMail Task Enum Priority : Low, High, Normal  -->
+      <!--SendMail Task Enum MessageSourceType : DirectInput, FileConnection, Variable    -->-->
+      <!--SendMail Task Specifies the files to include as attachments to the message, Separate the file Names with Pipes(|)-->
+      <SendMailTask Name="" SMTPServer="Key" From="sample@microsoft.com" To="sample@microsoft.com" CC="" BCC="" Subject="" 
+                    Priority="Normal" MessageSourceType="DirectInput" MessageSource="" >
+        <Attachments FileName="FileName1|FileName2|FileName3"/>
+      </SendMailTask>
+    
+      <!--Variable DataType => Char,String,Int16,Int32,Int64,Boolean,SByte,DateTime,DBNull,SByte,UInt32,UInt64,Single,Double-->
+      <Variables>
+           <Variable Name="" DataType="Int32" Value=""/>
+      </Variables>
+      <SetVariables>
+        <SetVariable  SQLStatement="" TargetConnection="key">
+          <ResultSet VariableName ="" Order="0" />
+          <ResultSet VariableName="" Order="1"/>
+        </SetVariable>
+        <SetVariable  SQLStatement="" TargetConnection="key">
+          <ResultSet VariableName ="" Order="0"/>
+        </SetVariable>
+      </SetVariables>
+      <Step ID="" Name="" TypeID="" TypeName="">
+        <SendMailTask Name="" SMTPServer="Key" From="ramsingh@microsoft.com" To="ramsingh@microsoft.com" CC="" BCC="" Subject=""
+                  Priority="Normal" MessageSourceType="DirectInput" MessageSource="" >
+          <Attachments FileName="FileName1|FileName2|FileName3"/>
+        </SendMailTask>
+        <SetVariables>
+          <SetVariable  SQLStatement="" TargetConnection="key">
+            <ResultSet VariableName ="" Order="0" />
+            <ResultSet VariableName="" Order="1"/>
+          </SetVariable>
+        </SetVariables>
+        <SQLTaskSet Name="" TargetConnection="key" RunParallel="True | False">
+          <SetVariables>
+            <SetVariable  SQLStatement="" TargetConnection="key">
+              <ResultSet VariableName ="" Order="0"/>
+            </SetVariable>
+          </SetVariables>
+          <SQLTask Name="" SQLStatement=""/>
+          <SendMailTask Name="" SMTPServer="Key" From="ramsingh@microsoft.com" To="ramsingh@microsoft.com" CC="" BCC="" Subject=""
+                Priority="Normal" MessageSourceType="DirectInput" MessageSource="" >
+            <Attachments FileName="FileName1|FileName2|FileName3"/>
+          </SendMailTask>
+        </SQLTaskSet>
+        <!-- Delete is applicable only when all the tables in a SET has the same Filter Column
+			   DeleteFilterClause could be e.g., Period=@Period, and at runtime @Period value will be replaced-->
+        <!-- ColumnDelimeter
+                Tab {t}, Comma {,},Vertical Bar {|},Semicolon {;},{LF},{CR},{CR}{LF}-->
+        <!-- RowDelimeter
+                Tab {t}, Comma {,},Vertical Bar {|},Semicolon {;},{LF},{CR},{CR}{LF}-->
+          <DataFlowSet Name="" SourceConnection="key"
+                    TargetConnection="key"
+                    SourceType="Folder | Excel | FlatFile | Table | SELECTSQL"
+                    TargetType="Excel | FlatFile | Table"
+                    PickColumnsFromTarget="True | False"
+                    ColumnDelimeter=";|,|t>" 
+                    RowDelimeter=";|,|t"
+                    IsColumnNamesInFirstDataRow="True|False"   
+                    RunParallel="True | False"
+					          TruncateOrDeleteBeforeInsert="None | Truncate | Delete"
+					          DeleteFilterClause=""
+                    AbortFlatFileLoadPostError="False"
+                    AllowFlatFileTruncate="False">
+                <SetVariables>
+                  <SetVariable  SQLStatement="" TargetConnection="key">
+                    <ResultSet VariableName ="" Order="0"/>
+                  </SetVariable>
+                </SetVariables>
+                <DataFlow Name="" SourceName="" TargetName="" >
+                  <ColumnMapping>
+                    <Mapping SourceColumn="" TargetColumn=""
+                             SourceType="" TargetType=""
+                             SourceLength="" TargetLength=""
+                             AllowTruncate="False|True"/>
+                  </ColumnMapping>
+                </DataFlow>
+                <SendMailTask Name="" SMTPServer="Key" From="ramsingh@microsoft.com" To="ramsingh@microsoft.com" CC="" BCC="" Subject=""
+                    Priority="Normal" MessageSourceType="DirectInput" MessageSource="" >
+                  <Attachments FileName="FileName1|FileName2|FileName3"/>
+                </SendMailTask>
+          </DataFlowSet>
+          <PackageExecution Name="" Connection="" PackageName=""/>
+      </Step>
+    </Process>
+ </CHEFMetaData>

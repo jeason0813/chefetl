@@ -1,0 +1,59 @@
+﻿<CHEFMetaData ApplicationName="TestApplication">
+  <Process ID="10000" Name="DemoDFT" DefaultAllowTruncate="False" VerboseLogging="False">
+    <ConnectionSet>
+      <SQLConnection key="SQLConnection" ServerName="(local)" DatabaseName="AdventureWorks" />
+      <FlatFileConnection key="FlatFileConnection" FileName="--FileFolderLocation--" /><!-- Example : C:\Test-->
+      <SMTPConnection key="SMTPConnection" SmtpServer="--SMTPServerName--" UseWindowsAuthentication="True" EnableSsl="False" />
+      <FileConnection key="DTSxPackageConnection" FileName="--Path--\Sample.dtsx" /> <!--Example c:\test\sample.dtsx-->
+    </ConnectionSet>
+    <Variables>
+      <Variable Name="vTID" DataType="String" Value="0" />
+    </Variables>
+    <SetVariables>
+      <SetVariable TargetConnection="SQLConnection" SQLStatement="SELECT  CAST([TerritoryID] as char(1)) FROM [AdventureWorks].[Sales].[SalesTerritory] where CountryRegionCode ='CA'">
+        <ResultSet VariableName="vTID" Order="0" />
+      </SetVariable>
+    </SetVariables>
+    <Step ID="10010" Name="Data Flow Test" TypeID="1" TypeName="Staging">
+      <DataFlowSet Name="Staging" SourceConnection="SQLConnection" TargetConnection="SQLConnection" SourceType="Table" TargetType="Table" PickColumnsFromTarget="True" RunParallel="True" TruncateOrDeleteBeforeInsert="Truncate" DeleteFilterClause="">
+        <DataFlow Name="Populate Sales Currency" SourceName="[Sales].[Currency]"
+                  TargetName="[Sales].[Currency_Dump]" />
+      </DataFlowSet>
+    </Step>
+    <Step ID="10020" Name="Data Flow Test" TypeID="1" TypeName="Staging">
+      <DataFlowSet Name="SQLQueryToTable" SourceConnection="SQLConnection" TargetConnection="SQLConnection" SourceType="Table" TargetType="Table" PickColumnsFromTarget="True" RunParallel="True" TruncateOrDeleteBeforeInsert="Truncate" DeleteFilterClause="">
+        <DataFlow Name="Populate Sales Currency" SourceName="Select *from [Sales].[Currency]"
+                  TargetName="[Sales].[Currency_Dump]" />
+      </DataFlowSet>
+    </Step>
+    <Step ID="10030" Name="FlatFileToTable Demo" TypeID="1" TypeName="Staging">
+      <DataFlowSet Name="FlatFile" SourceConnection="FlatFileConnection" TargetConnection="SQLConnection" SourceType="FlatFile" TargetType="Table" PickColumnsFromTarget="True" ColumnDelimeter=";" RowDelimeter="{CR}{LF}" IsColumnNamesInFirstDataRow="False" RunParallel="True" AllowFlatFileTruncate="False" TruncateOrDeleteBeforeInsert="Truncate" DeleteFilterClause="">
+        <DataFlow Name="TestFile1" SourceName="TestFile1.txt" TargetName="dbo.Table1" />
+        <DataFlow Name="TestFile2" SourceName="TestFile2.dat" TargetName="dbo.Table2" />
+        <DataFlow Name="TestFile3" SourceName="TestFile3.txt" TargetName="dbo.Table3" />
+        <DataFlow Name="TestFile4" SourceName="TestFile4.txt" TargetName="dbo.Table4" />
+        <DataFlow Name="TestFile5" SourceName="TestFile4.txt" TargetName="dbo.Table5" />
+        <DataFlow Name="TestFile6" SourceName="TestFile4.txt" TargetName="dbo.Table6" />
+      </DataFlowSet>
+    </Step>
+    <Step ID="10040" Name="SQLTaskTest" TypeID="1" TypeName="Staging" Description="This is to demo update">
+      <SQLTaskSet Name="SQLTaskSet" TargetConnection="SQLConnection" RunParallel="False">
+        <SQLTask Name="SQLTask" SQLStatement="UPDATE Sales.SalesPerson_Dump SET Bonus = Bonus+10000 where TerritoryID = CAST('&quot;+@[CHEF::vTID]+&quot;' as int)" />
+      </SQLTaskSet>
+    </Step>
+    <Step ID="10050" Name="SQLTaskTest" TypeID="2" TypeName="WareHouse" Description="This is to demo Stored Procedure SP Eexcute">
+      <SQLTaskSet Name="SQLTaskSet" TargetConnection="SQLConnection" RunParallel="False">
+        <SQLTask Name="SQLTask" SQLStatement="EXEC --SPName--  --ParameterName--" />
+        <SQLTask Name="SQLTask" SQLStatement="EXEC --SPName-- ID= CAST('&quot;+@[CHEF::vTID]+&quot;' as int)" />
+      </SQLTaskSet>
+    </Step>
+    <Step ID="10060" Name="SendMailTask Test" TypeID="1" TypeName="Staging">
+      <SendMailTask Name="SendMail" SMTPServer="SMTPConnection" From="sample@microsoft.com" To="sample1@microsoft.com" CC="" BCC="" Subject="Test Mail :Send Mail Task" Priority="Normal" MessageSourceType="Variable" MessageSource="Hi, This is mail Task">
+        <Attachments FileName="" />
+      </SendMailTask>
+    </Step>
+    <Step ID="10070" Name="Demo" TypeID="1" TypeName="Staging">
+      <PackageExecution Name="PackageTask" Connection="DTSxPackageConnection" PackageName="DemoPackageTask" />
+    </Step>
+  </Process>
+</CHEFMetaData>

@@ -1,0 +1,13 @@
+<CHEFMetaData ApplicationName="TestApplication">
+  <Process ID="2800" Name="DemoFlatFileToTable" DefaultAllowTruncate="False" VerboseLogging="False">
+    <ConnectionSet>
+      <FlatFileConnection key="FlatFileConnection" FileName="C:\Users\t-satsen\Desktop" />
+      <SQLConnection key="SQLConnection" ServerName="(local)" DatabaseName="AdventureWorks2012" />
+    </ConnectionSet>
+    <Step ID="2810" Name="FlatFileToTable Demo" TypeID="1" TypeName="Staging">
+      <DataFlowSet Name="FlatFile" SourceConnection="FlatFileConnection" TargetConnection="SQLConnection" SourceType="FlatFile" TargetType="Table" PickColumnsFromTarget="True" ColumnDelimeter="," RowDelimeter="{CR}{LF}" IsColumnNamesInFirstDataRow="True" RunParallel="True" AllowFlatFileTruncate="False" TruncateOrDeleteBeforeInsert="Truncate" DeleteFilterClause="">
+        <DataFlow Name="TestFile1" SourceName="MyFlatFile.txt" TargetName="Sales.CustomerCOPY" />
+      </DataFlowSet>
+    </Step>
+  </Process>
+</CHEFMetaData>

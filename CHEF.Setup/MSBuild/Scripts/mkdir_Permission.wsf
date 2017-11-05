@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+
+<package>
+<job id="1">
+
+<resource id="Usage">
+Usage: cscript mkdir_Web &lt;WWWRootPath&gt; &lt;WebUsers&gt; &lt;Domain&gt; &lt;MartServerName&gt; &lt;WebServerName&gt; 
+Example:  cscript mkdir_Web "E:\TDWWeb\Web" "redmond\devTax" "REDMOND" "AITDSQL41" "AITDIIS40"
+</resource>
+
+<reference object="Scripting.FileSystemObject" />
+<reference object="Scripting.Dictionary" />
+<script language="VBScript" src="utils.vbs" />
+<script language="VBScript">
+<![CDATA[
+
+	Option Explicit
+		
+	Dim folderPath, userPermission , sDomain,  serverName ,shareName
+
+	If (WScript.Arguments.length < 4) Then
+		WScript.Echo getResource("Usage")
+		WScript.Quit 1
+	End If
+
+	folderPath = WScript.Arguments(0)
+    serverName = WScript.Arguments(1)
+	sDomain = WScript.Arguments(2)
+    shareName = WScript.Arguments(3)
+	
+
+
+	CreateFolders serverName, folderPath
+
+    'ShareFolder sDomain,serverName , folderPath , shareName, "1"'
+    
+   	'SetPermissions serverName, folderPath , "Administrators", "CUSTOM_NTFS_FULLCONTROL", "NTFS"'
+	
+		
+]]>
+</script>
+</job>
+</package>

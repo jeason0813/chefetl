@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xs:element name="SendMailTask">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Attachments" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:attribute name="FileName" type="xs:string" />
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="Name" type="xs:string" />
+      <xs:attribute name="SMTPServer" type="xs:string" />
+      <xs:attribute name="From" type="xs:string" />
+      <xs:attribute name="To" type="xs:string" />
+      <xs:attribute name="CC" type="xs:string" />
+      <xs:attribute name="BCC" type="xs:string" />
+      <xs:attribute name="Subject" type="xs:string" />
+      <xs:attribute name="Priority" type="xs:string" />
+      <xs:attribute name="MessageSourceType" type="xs:string" />
+      <xs:attribute name="MessageSource" type="xs:string" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SetVariables">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="SetVariable" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ResultSet" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="VariableName" type="xs:string" />
+                  <xs:attribute name="Order" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="SQLStatement" type="xs:string" />
+            <xs:attribute name="TargetConnection" type="xs:string" />
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CHEFMetaData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Process" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ConnectionSet" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="SQLConnection" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:attribute name="key" type="xs:string" />
+                        <xs:attribute name="ServerName" type="xs:string" />
+                        <xs:attribute name="DatabaseName" type="xs:string" />
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="FileConnection" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:attribute name="key" type="xs:string" />
+                        <xs:attribute name="FileName" type="xs:string" />
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="FlatFileConnection" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:attribute name="key" type="xs:string" />
+                        <xs:attribute name="FileName" type="xs:string" />
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="SMTPConnection" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:attribute name="key" type="xs:string" />
+                        <xs:attribute name="SmtpServer" type="xs:string" />
+                        <xs:attribute name="UseWindowsAuthentication" type="xs:string" />
+                        <xs:attribute name="EnableSsl" type="xs:string" />
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element ref="SendMailTask" minOccurs="0" maxOccurs="unbounded" />
+              <xs:element name="Variables" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Variable" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:attribute name="Name" type="xs:string" />
+                        <xs:attribute name="DataType" type="xs:string" />
+                        <xs:attribute name="Value" type="xs:string" />
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element ref="SetVariables" minOccurs="0" maxOccurs="unbounded" />
+              <xs:element name="Step" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="SendMailTask" minOccurs="0" maxOccurs="unbounded" />
+                    <xs:element ref="SetVariables" minOccurs="0" maxOccurs="unbounded" />
+                    <xs:element name="SQLTaskSet" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element ref="SetVariables" minOccurs="0" maxOccurs="unbounded" />
+                          <xs:element name="SQLTask" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:attribute name="Name" type="xs:string" />
+                              <xs:attribute name="SQLStatement" type="xs:string" />
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element ref="SendMailTask" minOccurs="0" maxOccurs="unbounded" />
+                        </xs:sequence>
+                        <xs:attribute name="Name" type="xs:string" />
+                        <xs:attribute name="TargetConnection" type="xs:string" />
+                        <xs:attribute name="RunParallel" type="xs:string" />
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="DataFlowSet" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element ref="SetVariables" minOccurs="0" maxOccurs="unbounded" />
+                          <xs:element name="DataFlow" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="ColumnMapping" minOccurs="0" maxOccurs="unbounded">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="Mapping" minOccurs="0" maxOccurs="unbounded">
+                                        <xs:complexType>
+                                          <xs:attribute name="SourceColumn" type="xs:string" />
+                                          <xs:attribute name="TargetColumn" type="xs:string" />
+                                          <xs:attribute name="SourceType" type="xs:string" />
+                                          <xs:attribute name="TargetType" type="xs:string" />
+                                          <xs:attribute name="SourceLength" type="xs:string" />
+                                          <xs:attribute name="TargetLength" type="xs:string" />
+                                          <xs:attribute name="AllowTruncate" type="xs:string" />
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                              <xs:attribute name="Name" type="xs:string" />
+                              <xs:attribute name="SourceName" type="xs:string" />
+                              <xs:attribute name="TargetName" type="xs:string" />
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element ref="SendMailTask" minOccurs="0" maxOccurs="unbounded" />
+                        </xs:sequence>
+                        <xs:attribute name="Name" type="xs:string" />
+                        <xs:attribute name="SourceConnection" type="xs:string" />
+                        <xs:attribute name="TargetConnection" type="xs:string" />
+                        <xs:attribute name="SourceType" type="xs:string" />
+                        <xs:attribute name="TargetType" type="xs:string" />
+                        <xs:attribute name="PickColumnsFromTarget" type="xs:string" />
+                        <xs:attribute name="ColumnDelimeter" type="xs:string" />
+                        <xs:attribute name="RowDelimeter" type="xs:string" />
+                        <xs:attribute name="IsColumnNamesInFirstDataRow" type="xs:string" />
+                        <xs:attribute name="RunParallel" type="xs:string" />
+                        <xs:attribute name="TruncateOrDeleteBeforeInsert" type="xs:string" />
+                        <xs:attribute name="DeleteFilterClause" type="xs:string" />
+                        <xs:attribute name="AbortFlatFileLoadPostError" type="xs:string" />
+                        <xs:attribute name="AllowFlatFileTruncate" type="xs:string" />
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="PackageExecution" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:attribute name="Name" type="xs:string" />
+                        <xs:attribute name="Connection" type="xs:string" />
+                        <xs:attribute name="PackageName" type="xs:string" />
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="ID" type="xs:string" />
+                  <xs:attribute name="Name" type="xs:string" />
+                  <xs:attribute name="TypeID" type="xs:string" />
+                  <xs:attribute name="TypeName" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="DefaultAllowTruncate" type="xs:string" />
+            <xs:attribute name="VerboseLogging" type="xs:string" />
+            <xs:attribute name="BadRowsFolderLocation" type="xs:string" />
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="ApplicationName" type="xs:string" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="SendMailTask" />
+        <xs:element ref="SetVariables" />
+        <xs:element ref="CHEFMetaData" />
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

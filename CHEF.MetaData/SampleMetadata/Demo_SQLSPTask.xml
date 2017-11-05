@@ -1,0 +1,20 @@
+<CHEFMetaData ApplicationName="TestApplication">
+  <Process ID="2900" Name="DemoSQLSPTask" DefaultAllowTruncate="False" VerboseLogging="False">
+    <ConnectionSet>
+      <SQLConnection key="SQLConnection" ServerName="(local)" DatabaseName="AdventureWorks2012" />
+    </ConnectionSet>
+    <Variables>
+      <Variable Name="vTID" DataType="String" Value="0" />
+    </Variables>
+    <SetVariables>
+      <SetVariable TargetConnection="SQLConnection" SQLStatement="SELECT  CAST([TerritoryID] as char(1)) FROM [AdventureWorks2012].[Sales].[SalesTerritory] where CountryRegionCode ='CA'">
+        <ResultSet VariableName="vTID" Order="0" />
+      </SetVariable>
+    </SetVariables>
+    <Step ID="2910" Name="SQLTaskTest" TypeID="1" TypeName="Staging" Description="This is to demo Stored Procedure SP Execute">
+      <SQLTaskSet Name="SQLTaskSet" TargetConnection="SQLConnection" RunParallel="False">
+        <SQLTask Name="SQLTask1" SQLStatement="EXEC [dbo].[uspGetBillOfMaterials] @startProductid=514, @CheckDate='01/23/2005'" />
+      </SQLTaskSet>
+    </Step>
+  </Process>
+</CHEFMetaData>

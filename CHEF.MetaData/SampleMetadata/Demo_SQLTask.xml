@@ -1,0 +1,20 @@
+<CHEFMetaData ApplicationName="TestApplication">
+  <Process ID="2300" Name="DemoSQLTask" DefaultAllowTruncate="False" VerboseLogging="False">
+    <ConnectionSet>
+      <SQLConnection key="SQLConnection" ServerName="(local)" DatabaseName="AdventureWorks2012" />
+    </ConnectionSet>
+    <Variables>
+      <Variable Name="vTID" DataType="String" Value="0" />
+    </Variables>
+    <SetVariables>
+      <SetVariable TargetConnection="SQLConnection" SQLStatement="SELECT  CAST([TerritoryID] as char(1)) FROM [AdventureWorks2012].[Sales].[SalesTerritory] where CountryRegionCode ='CA'">
+        <ResultSet VariableName="vTID" Order="0" />
+      </SetVariable>
+    </SetVariables>
+    <Step ID="2310" Name="SQLTaskTest" TypeID="1" TypeName="Staging" Description="This is to demo update">
+      <SQLTaskSet Name="SQLTaskSet" TargetConnection="SQLConnection" RunParallel="False">
+        <SQLTask Name="SQLTask" SQLStatement="UPDATE Sales.SalesPerson SET Bonus = Bonus+10000 where TerritoryID = CAST('&quot;+@[CHEF::vTID]+&quot;' as int)" />
+      </SQLTaskSet>
+    </Step>
+  </Process>
+</CHEFMetaData>

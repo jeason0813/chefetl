@@ -1,0 +1,10 @@
+<CHEFMetaData ApplicationName="TestApplication">
+  <Process ID="2600" Name="DemoPackagePackageTask" DefaultAllowTruncate="False" VerboseLogging="False">
+    <ConnectionSet>
+      <FileConnection key="DTSxPackageConnection" FileName="C:\Users\t-satsen\Documents\Visual Studio 2010\Projects\Package_DatabaseToDatabase\BasicFeaturesPackage\bin\Debug\TableToTableDataTransferPkg.dtsx" />
+    </ConnectionSet>
+    <Step ID="2610" Name="Demo" TypeID="1" TypeName="Staging">
+      <PackageExecution Name="PackageTask" Connection="DTSxPackageConnection" PackageName="DemoPackageTask" />
+    </Step>
+  </Process>
+</CHEFMetaData>

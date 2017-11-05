@@ -1,0 +1,12 @@
+<CHEFMetaData ApplicationName="TestApplication">
+  <Process ID="2700" Name="DemoDFTSQLQueryToTable" DefaultAllowTruncate="False" VerboseLogging="False">
+    <ConnectionSet>
+      <SQLConnection key="SQLConnection" ServerName="(local)" DatabaseName="AdventureWorks2012" />
+    </ConnectionSet>
+    <Step ID="2710" Name="Data Flow Test" TypeID="1" TypeName="Staging">
+      <DataFlowSet Name="SQLQueryToTable" SourceConnection="SQLConnection" TargetConnection="SQLConnection" SourceType="SELECTSQL" TargetType="Table" PickColumnsFromTarget="True" RunParallel="True" TruncateOrDeleteBeforeInsert="Truncate" DeleteFilterClause="">
+        <DataFlow Name="Populate Sales Currency" SourceName="Select * from [Sales].[Currency]" TargetName="[Sales].[Currency_Copy]" />
+      </DataFlowSet>
+    </Step>
+  </Process>
+</CHEFMetaData>

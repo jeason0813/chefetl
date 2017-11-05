@@ -1,0 +1,3 @@
+<CHEFGlobalConfig ApplicationName="TDW">
+  <GlobalConfiguration Version="1.0" LogLocation="C:\Program Files\Microsoft\CHEF\Log\" InstallationBitLocation="C:\Program Files\Microsoft\CHEF\Engine" MaxBatchSize="1024" MaxLogTableSize="1024" NotificationAlias="ramsingh" SendNotification="True" ThresholdTimeInMinutes="10" OutputPackageLocation="C:\Program Files\Microsoft\CHEF\CHEFPackage.dtsx" LogArchiveRowLimit="1000000" LogResetIdentity="2000000000" LogArchiveDepricationInterval="10" ApplicationEventViewerName="CHEF" BadRowFolderLocation="C:\Program Files\Microsoft\CHEF" />
+</CHEFGlobalConfig>

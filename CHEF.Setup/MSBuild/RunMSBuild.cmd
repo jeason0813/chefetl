@@ -1,0 +1,2 @@
+
+msbuild scripts\CHEF.proj /p:Configuration=%1 /l:FileLogger,Microsoft.Build.Engine;logfile=MainBuild.log;verbosity=normal;encoding=utf-8 /l:FileLogger,Microsoft.Build.Engine;logfile=MainBuild.diagnostic.log;verbosity=diagnostic;encoding=utf-8

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CHEFGlobalConfig ApplicationName="TDW">
+  <GlobalConfiguration Version="" 
+                       LogLocation="" 
+                       InstallationBitLocation="" 
+                       MaxBatchSize="" 
+                       MaxLogTableSize=""  
+                       NotificationAlias="" 
+                       SendNotification="" 
+                       DBMailProfileName =""
+                       ThresholdTimeInMinutes="" 
+                       OutputPackageLocation=""
+                       BadRowFolderLocation=""
+                       />
+</CHEFGlobalConfig>

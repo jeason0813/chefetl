@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="">
+  <Target Name="Scripts">
+	  
+    
+	 <!--<Exec Command="CreateFolder.cmd &quot;$(OutputLogPath)&quot; &quot;$(CHEFServer)&quot; &quot;$(ServerDomain)&quot; &quot;$(ShareName)&quot; "/>-->
+    <!--Run Schema Scripts-->
+    <Sql.Execute ServerName="$(CHEFServer)" DatabaseName="$(DBName)" path="..\..\Database\Schema Objects\Schema\*.sql" CommandTimeout="0"/>
+
+    
+    <!--Run Table Scripts-->
+
+    <Sql.Execute ServerName="$(CHEFServer)" DatabaseName="$(DBName)" path="..\..\Database\Schema Objects\Table\*.sql" CommandTimeout="0"/>
+
+    <!--Run View Scripts-->
+
+    <Sql.Execute ServerName="$(CHEFServer)" DatabaseName="$(DBName)" path="..\..\Database\Schema Objects\View\*.sql" CommandTimeout="0"/>
+    
+    <!--Run SP Scripts-->
+
+    <Sql.Execute ServerName="$(CHEFServer)" DatabaseName="$(DBName)" path="..\..\Database\Schema Objects\Stored Procedure\*.sql" CommandTimeout="0"/>
+    
+    <!--Run Function Script-->
+
+    <Sql.Execute ServerName="$(CHEFServer)" DatabaseName="$(DBName)" path="..\..\Database\Schema Objects\Functions\*.sql" CommandTimeout="0"/>
+
+
+    <!--Replace DBName value in Stop process script-->
+   
+
+    <!--Replace value in metadata script-->
+    <File.Replace path="..\..\Database\Post Deployment\Scripts\InsertGlobalConfig.sql" RegularExpression="CHEF.PATH" NewValue="$(OutputPackagePath)" Force="True"/>
+
+
+    <!--Run PostDeployment Script Script-->
+    <Sql.Execute ServerName="$(CHEFServer)" DatabaseName="$(DBName)" path="..\..\Database\Post Deployment\Scripts\*.sql" CommandTimeout="0"/>
+    
+    <!--<Sql.Execute ServerName="$(CHEFServer)" DatabaseName="$(DBName)" path="..\..\Database\01_CHEF_Database_Schema.sql" CommandTimeout="0"/>
+    <Sql.Execute ServerName="$(CHEFServer)" DatabaseName="$(DBName)" path="..\..\Database\02_CHEF_Configuration.sql" CommandTimeout="0"/>
+    <Sql.Execute ServerName="$(CHEFServer)" DatabaseName="$(DBName)" path="..\..\Database\03_CHEF_RequestQueue.sql" CommandTimeout="0"/>
+    <Sql.Execute ServerName="$(CHEFServer)" DatabaseName="$(DBName)" path="..\..\Database\04_1_CHEF_MetaData.sql" CommandTimeout="0"/>
+    <Sql.Execute ServerName="$(CHEFServer)" DatabaseName="$(DBName)" path="..\..\Database\04_CHEF_Log.sql" CommandTimeout="0"/>
+    <Sql.Execute ServerName="$(CHEFServer)" DatabaseName="$(DBName)" path="..\..\Database\05_CHEF_LogArchive.sql" CommandTimeout="0"/>
+    
+    <Sql.Execute ServerName="$(CHEFServer)" DatabaseName="$(DBName)" path="..\..\Database\06_CHEF_InsertRequestQueue.sql" CommandTimeout="0"/>
+    <Sql.Execute ServerName="$(CHEFServer)" DatabaseName="$(DBName)" path="..\..\Database\07_CHEF_InsertLog.sql" CommandTimeout="0"/>
+    <Sql.Execute ServerName="$(CHEFServer)" DatabaseName="$(DBName)" path="..\..\Database\08_CHEF_DataLoadStatus.sql" CommandTimeout="0"/>
+    <Sql.Execute ServerName="$(CHEFServer)" DatabaseName="$(DBName)" path="..\..\Database\09_CHEF_Database_RoleAndPermission.sql" CommandTimeout="0"/>
+
+    <Sql.Execute ServerName="$(CHEFServer)" DatabaseName="$(DBName)" path="..\..\Database\12_CHEF_UpdateJobStatus.sql" CommandTimeout="0"/>
+    <Sql.Execute ServerName="$(CHEFServer)" DatabaseName="$(DBName)" path="..\..\Database\13_CHEF_DisplayStatus.sql" CommandTimeout="0"/>
+    <Sql.Execute ServerName="$(CHEFServer)" DatabaseName="$(DBName)" path="..\..\Database\14_CHEF_GetActiveQProcess.sql" CommandTimeout="0"/>
+    <Sql.Execute ServerName="$(CHEFServer)" DatabaseName="$(DBName)" path="..\..\Database\15_CHEF_GETPROCESSWITHSTATUS.sql" CommandTimeout="0"/>-->
+
+    <!--Run Job Script-->
+    <Exec Command="ConfigureJob.cmd  &quot;$(CHEFServer)&quot; &quot;$(DBName)&quot; &quot;$(OutputPackagePath)&quot;"/>
+
+    <!--Replace value in Engine.exe.config-->
+    <File.Replace path="$(OutputPackagePath)\Engine\CHEF.exe.config" RegularExpression="CHEF.DBNAME" NewValue="$(DBName)" Force="True"/>
+    <File.Replace path="$(OutputPackagePath)\Engine\CHEF.exe.config" RegularExpression="CHEF.SERVERNAME" NewValue="$(CHEFServer)" Force="True"/>    
+    <File.Replace path="$(OutputPackagePath)\Engine\AdminUtility.exe.config" RegularExpression="CHEF.DBNAME" NewValue="$(DBName)" Force="True"/>
+    <File.Replace path="$(OutputPackagePath)\Engine\AdminUtility.exe.config" RegularExpression="CHEF.SERVERNAME" NewValue="$(CHEFServer)" Force="True"/>
+    <File.Replace path="$(OutputPackagePath)\Engine\AdminUtility.exe.config" RegularExpression="CHEF.PACKAGEOUTPUT" NewValue="$(OutputPackagePath)" Force="True"/>
+  </Target>
+	
+</Project>

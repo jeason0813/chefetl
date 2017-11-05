@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<package>
+<job id="1">
+
+<resource id="Usage">
+Usage: cscript.exe netsvc.wsf &lt;ServiceName&gt; &lt;Command&gt; &lt;MachineName&gt; 
+Example:  cscript.exe netsvc.wsf "w3svc" "stop"  "GDCICSPADEVMT01"
+</resource>
+
+<reference object="Scripting.FileSystemObject" />
+<script language="VBScript" src="utils.vbs" />
+<script language="VBScript">
+<![CDATA[
+
+	Option Explicit
+	Dim sMachineName, sAction , sServiceName
+
+
+	If (WScript.Arguments.length < 3) Then
+		WScript.Echo getResource("Usage")
+		WScript.Quit 1
+	End If
+		
+	sServiceName = WScript.Arguments(0)
+	sAction = WScript.Arguments(1)
+	sMachineName = WScript.Arguments(2)
+
+	netsvc sServiceName, sAction, sMachineName
+
+]]>
+</script>
+</job>
+</package>

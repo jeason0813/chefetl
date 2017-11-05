@@ -1,0 +1,76 @@
+﻿<Window x:Class="AdminUtility.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"  
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"  
+        Title="CHEF Admin Utility" Height="500" Width="640" WindowStartupLocation="Manual" WindowStyle="SingleBorderWindow"
+         xmlns:local="clr-namespace:AdminUtility">
+    <Grid Height="450">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="26*" />
+            <ColumnDefinition Width="605*" />
+        </Grid.ColumnDefinitions>
+        <TabControl Height="438" HorizontalAlignment="Left" Margin="12,12,0,0" Name="tabControl1" VerticalAlignment="Top" Width="607" SelectionChanged="tabControl1_SelectionChanged" Grid.ColumnSpan="2">
+            <TabItem Header="Metadata" Name="tabItem1" Height="40" Width="100" FontWeight="Bold" FontSize="13">
+                <Grid>
+                    <Label Content="Select the Metadata File:" Height="26" HorizontalAlignment="Left" Margin="19,54,0,0" Name="label1" VerticalAlignment="Top"  FontSize="12" FontWeight="Bold" Width="336">
+                     </Label>
+                    <TextBox Height="23" HorizontalAlignment="Left" Margin="19,82,0,0" Name="textBoxMetaDataFile" VerticalAlignment="Top" Width="472" FontSize="13" FontWeight="Bold" TextChanged="textBoxMetaDataFile_TextChanged" />
+                    <Button Content="Browse" Height="23" HorizontalAlignment="Left" Margin="497,82,0,0" Name="buttonBrowseMetaDataFile" VerticalAlignment="Top" Width="86" Click="buttonBrowseMetaDataFile_Click">
+                    </Button>
+                    <Button Content="Create/Update Package" Height="56" HorizontalAlignment="Left" Margin="195,144,0,0" Name="buttonCreatePackage" VerticalAlignment="Top" Width="186" Click="buttonCreatePackage_Click" FontSize="15" FontWeight="Bold" DataContext="{Binding}">
+                    </Button>
+                    <Button BorderBrush="#FF707070" Content="View Log" FontSize="15" FontWeight="Bold" Height="56" HorizontalAlignment="Left" Margin="197,227,0,0" Name="buttonCreationLog" VerticalAlignment="Top" Width="184" Click="buttonCreationLog_Click" Visibility="Hidden">
+                    </Button>
+                    <ProgressBar Height="23" HorizontalAlignment="Left" Margin="6,342,0,0" Name="ProgressBar1" VerticalAlignment="Top" Width="577" Visibility="Hidden" Foreground="#FF005500" />
+                    <Label Content="Note: Package will be updated if already exists." FontSize="12" FontWeight="Normal" Height="26" HorizontalAlignment="Left" Margin="19,111,0,0" Name="label3" VerticalAlignment="Top" Width="336" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="Package" Height="40" Width="100" FontSize="12" FontWeight="Bold" >
+                <Grid Background="{x:Null}">
+                    <Label Content="Select Package" Height="34" HorizontalAlignment="Left" Margin="25,49,0,0" Name="labelSelectPackage" VerticalAlignment="Top" Width="262" FontSize="14" FontWeight="Bold" BorderThickness="4">
+                         
+                    </Label>
+                    <Button Content="Run Package" Height="54" HorizontalAlignment="Left" Margin="157,145,0,0" Name="buttonRunPackage" VerticalAlignment="Top" Width="240" FontSize="18" FontWeight="Bold" BorderThickness="4"  Click="button1_Click">
+                    </Button>
+                    <ComboBox Height="34" HorizontalAlignment="Right" Margin="0,49,169,0" Name="comboBoxPackages" VerticalAlignment="Top" Width="271"  SelectionChanged="comboBoxPackages_SelectionChanged" FontSize="18" FontWeight="Bold">
+                    </ComboBox>
+                    <Button Content="View Log" Height="56" HorizontalAlignment="Left" Margin="157,246,0,0" Name="buttonViewLog" VerticalAlignment="Top" Width="249" FontSize="18" FontWeight="Bold" Click="button1_Click_1" Visibility="Hidden">
+                    </Button>
+                    <ProgressBar Height="23" HorizontalAlignment="Left" Margin="7,332,0,0" Name="ProgressBarExecutePackage" VerticalAlignment="Top" Width="577" Visibility="Hidden" Foreground="#FF006000" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="Log" GotFocus="TabItem_GotFocus" Height="40" Width="100" FontSize="12" FontWeight="Bold">
+                <DataGrid AutoGenerateColumns="True" Name="dataGridLogDetails" Width="570" Height="380">
+                </DataGrid>
+                
+            </TabItem>
+            <TabItem Header="Encrypt/Decrypt" GotFocus="TabItem_GotFocus" Height="40" Width="140" FontSize="12" FontWeight="Bold">
+                <Grid Height="355" Width="592">
+                    <Label Content="Enter the Password/AccountKey:" Height="26" HorizontalAlignment="Left" Margin="19,54,0,0" Name="labelConnStr" VerticalAlignment="Top"  FontSize="12" FontWeight="Bold" Width="336">
+                    </Label>
+                    <TextBox Height="23" HorizontalAlignment="Left" Margin="19,82,0,0" Name="textBoxPassword" VerticalAlignment="Top" Width="472" FontSize="13" FontWeight="Bold" TextChanged="textBoxPassword_TextChanged" />
+                    <Button Content="Encrypt" Height="23" HorizontalAlignment="Left" Margin="497,82,0,0" Name="buttonEncrypt" VerticalAlignment="Top" Width="86" Click="buttonEncrypt_Click">
+                    </Button>
+                    <TextBox Height="23" HorizontalAlignment="Left"  Margin="19,144,0,0"  Name="textBoxDPassword" VerticalAlignment="Top" Width="472" FontSize="13" FontWeight="Bold" TextChanged="textBoxPassword_TextChanged" />
+                    <Label Content="Decrypted Password/AccountKey" FontSize="12" FontWeight="Normal" Height="26" HorizontalAlignment="Left" Margin="19,111,0,0" Name="labelDPassword" VerticalAlignment="Top" Width="336" />
+                    <Button Content="Decrypt " Height="23" HorizontalAlignment="Left" Margin="497,145,0,0" Name="buttonDecrypt" VerticalAlignment="Top" Width="86" Click="buttonDecrypt_Click"/>
+                    <Label Content="" FontSize="12" FontWeight="Normal" Height="26" HorizontalAlignment="Left" Margin="50,180,0,0" Name="labelEnPassword" VerticalAlignment="Top" Width="336" />
+                    
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <ComboBox Height="23" HorizontalAlignment="Right" Margin="0,13,12,0" x:Name="themes" VerticalAlignment="Top" Width="120" SelectionChanged="themes_SelectionChanged" Visibility="Hidden" Grid.Column="1" />
+        <Label Content="Select Theme" Height="28" HorizontalAlignment="Left" Margin="388,9,0,0" Name="label2" VerticalAlignment="Top" Width="78" Visibility="Hidden" Grid.Column="1" />
+    </Grid>
+    <Window.BorderBrush>
+        <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+            <GradientStop Color="Black" Offset="0" />
+            <GradientStop Color="#FF654242" Offset="1" />
+        </LinearGradientBrush>
+    </Window.BorderBrush>
+    <Window.Background>
+        <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+            <GradientStop Color="Black" Offset="0" />
+            <GradientStop Color="#B3B2C7D6" Offset="0.793" />
+        </LinearGradientBrush>
+    </Window.Background>
+</Window>

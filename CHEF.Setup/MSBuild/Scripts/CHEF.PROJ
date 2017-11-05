@@ -1,0 +1,21 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" >
+  <!-- IMPORT STATEMENTS -->
+  <!-- Configuration File -->
+  <Import Project = "Config.PROJ" />
+  <Import Project = "../Imports/SDCTasks.proj" />
+  <Import Project = "../bin/Microsoft.Common.Tasks"/>
+
+  <!--Import Scripts Target--> 
+  <Import Project="Scripts.Target"/>
+  <Target Name="Deploy_Scripts" Condition="'$(Deploy_Scripts)'=='True'">
+    <CallTarget Targets="Scripts"/>
+    <Message Text="Succesfully completed Scripts target"/>
+    <OnError ExecuteTargets="ErrorBuild" />
+  </Target>
+
+  <!-- Error Build -->
+  <Target Name="ErrorBuild">
+    <Message Text="Error occurred while executing the script. See the log file for details." />
+  </Target>
+</Project>
+

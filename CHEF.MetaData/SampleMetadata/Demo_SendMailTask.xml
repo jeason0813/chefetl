@@ -1,0 +1,12 @@
+<CHEFMetaData ApplicationName="TestApplication">
+  <Process ID="2500" Name="DemoPackageMailTask" DefaultAllowTruncate="False" VerboseLogging="False">
+    <ConnectionSet>
+      <SMTPConnection key="SMTPConnection" SmtpServer="mail.messaging.microsoft.com" UseWindowsAuthentication="True" EnableSsl="False" />
+    </ConnectionSet>
+    <Step ID="2510" Name="SendMailTask Test" TypeID="1" TypeName="Staging">
+      <SendMailTask Name="SendMail" SMTPServer="SMTPConnection" From="t-satsen@microsoft.com" To="t-satsen@microsoft.com" CC="" BCC="" Subject="Test Mail :Send Mail Task" Priority="Normal" MessageSourceType="DirectInput" MessageSource="Hi, This is mail Task">
+        <Attachments FileName="" />
+      </SendMailTask>
+    </Step>
+  </Process>
+</CHEFMetaData>

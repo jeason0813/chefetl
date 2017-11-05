@@ -1,0 +1,9 @@
+﻿
+Understanding SSIS API - Code samples
+	http:// sqlsrvintegrationsrv.codeplex.com/SourceControl/list/changesets
+
+How to list a FlatFile connection manager's columns programmatically?  Ans: You cannot
+	http:// social.msdn.microsoft.com/Forums/en-US/sqlintegrationservices/thread/c5a812c4-e257-4a08-8920-98bc8711e4c7
+
+* Each task is considered as EXECUTABLE
+* DFT Consist of Pipeline
